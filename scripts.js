@@ -5,79 +5,65 @@ function getComputerChoice() {
     return choices[random];
 }
 
-function verifyChoice(selection) {
-    let caseSelection = selection.toUpperCase();
-    if (choices.includes(caseSelection)) {
-        return true;
-    } else {
-        return false;
-    }
+function updateScore() {
+    let currentScore = document.querySelector('.score').textContent;
+    currentScore = parseInt(currentScore) + 1;
+    document.querySelector('.score').textContent = currentScore;
 }
 
-function playRound(playerSelection, computerSelection) {
-    let casePlayerSelection = playerSelection.toUpperCase();
+function playRound(playerString) {
+    let playerSelection = playerString.toUpperCase();
+    let computerSelection = getComputerChoice();
 
-    if (casePlayerSelection == 'ROCK') {
-        if (computerSelection == 'ROCK') {
-            return "Looks like it's a draw!";
-        } else if (computerSelection == 'PAPER') {
-            return "".concat("You Lose! ", computerSelection , " beats " , casePlayerSelection);
-        } else {
-            return "".concat("You Win! " , casePlayerSelection , " beats " , computerSelection);
-        }
+    if (playerSelection == computerSelection) {
+        console.log("Looks like it's a draw!");
+        // return "Looks like it's a draw!";
     }
 
-    if (casePlayerSelection == 'PAPER') {
+    if (playerSelection == 'ROCK') {
         if (computerSelection == 'PAPER') {
-            return "Looks like it's a draw!";
-        } else if (computerSelection == 'SCISSORS') {
-            return "".concat("You Lose! ", computerSelection , " beats " , casePlayerSelection);
+            console.log("".concat("You Lose! ", computerSelection , " beats " , playerSelection));
+            // return "".concat("You Lose! ", computerSelection , " beats " , playerSelection);
         } else {
-            return "".concat("You Win! " , casePlayerSelection , " beats " , computerSelection);
+            updateScore();
+            console.log("".concat("You Win! " , playerSelection , " beats " , computerSelection));
+            // return "".concat("You Win! " , playerSelection , " beats " , computerSelection);
         }
     }
 
-    if (casePlayerSelection == 'SCISSORS') {
+    if (playerSelection == 'PAPER') {
         if (computerSelection == 'SCISSORS') {
-            return "Looks like it's a draw!";
-        } else if (computerSelection == 'ROCK') {
-            return "".concat("You Lose! ", computerSelection , " beats " , casePlayerSelection);
+            console.log("".concat("You Lose! ", computerSelection , " beats " , playerSelection));
+            // return "".concat("You Lose! ", computerSelection , " beats " , playerSelection);
         } else {
-            return "".concat("You Win! ", casePlayerSelection , " beats " , computerSelection);
+            updateScore();
+            console.log("".concat("You Win! " , playerSelection , " beats " , computerSelection));
+            // return "".concat("You Win! " , playerSelection , " beats " , computerSelection);
+        }
+    }
+
+    if (playerSelection == 'SCISSORS') {
+        if (computerSelection == 'ROCK') {
+            console.log("".concat("You Lose! ", computerSelection , " beats " , playerSelection));
+            // return "".concat("You Lose! ", computerSelection , " beats " , playerSelection);
+        } else {
+            updateScore();
+            console.log("".concat("You Win! " , playerSelection , " beats " , computerSelection));
+            // return "".concat("You Win! ", playerSelection , " beats " , computerSelection);
         }
     }
 }
 
 function game() {
     console.log("Welcome to Rock, Papers, Scissors!");
-
-    var choiceVerified = false;
-
-    for (let i = 0; i < 5; i++) {
-        let playerChoice = "";
-
-        while (choiceVerified == false) {
-            playerChoice = prompt();
-            if (verifyChoice(playerChoice) == true) {
-                choiceVerified = true;
-            } else {
-                alert("Oops! Seems like you entered a typo. Try Again.")
-            }
-        }
-
-        choiceVerified = false;
-
-        let computerChoice = getComputerChoice();
-        console.log(playerChoice);
-        console.log(computerChoice);
-        console.log(playRound(playerChoice, computerChoice));
-    }
 }
 
-// var playerChoice = 'rOcK';
+const rockButton = document.querySelector('.rockbtn');
+const paperButton = document.querySelector('.paperbtn');
+const scissorsButton = document.querySelector('.scissorsbtn');
 
-// console.log(playerChoice);
-
-// console.log(playRound(playerChoice, getComputerChoice()));
+rockButton.addEventListener('click', () => {playRound('ROCK', getComputerChoice())});
+paperButton.addEventListener('click', () => {playRound('PAPER', getComputerChoice())});
+scissorsButton.addEventListener('click', () => {playRound('SCISSORS', getComputerChoice())});
 
 game();
